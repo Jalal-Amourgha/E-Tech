@@ -6,19 +6,19 @@ import { FaFacebookF, FaInstagram, FaTiktok, FaWhatsapp } from "react-icons/fa";
 import { FaXTwitter } from "react-icons/fa6";
 
 const socials = [
-  <FaFacebookF />,
-  <FaInstagram />,
-  <FaXTwitter />,
-  <FaTiktok />,
-  <FaWhatsapp />,
+  { id: 1, icon: <FaFacebookF /> },
+  { id: 2, icon: <FaInstagram /> },
+  { id: 3, icon: <FaXTwitter /> },
+  { id: 4, icon: <FaTiktok /> },
+  { id: 5, icon: <FaWhatsapp /> },
 ];
 
 const Footer = () => {
   return (
     <>
       <section className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 mt-100 mb-10">
-        {sponsors.map((sponsor) => (
-          <div key={sponsor.id}>
+        {sponsors.map((sponsor, index) => (
+          <div key={index}>
             <Image
               src={sponsor.icon}
               width={150}
@@ -45,20 +45,20 @@ const Footer = () => {
                     className="bg-bg-color text-primary rounded-full text-2xl p-2 duration-300 hover:bg-primary hover:text-white cursor-pointer"
                     key={index}
                   >
-                    {social}
+                    {social.icon}
                   </div>
                 ))}
               </div>
             </div>
-            {footerLinks.map((item) => (
-              <div key={item.label}>
+            {footerLinks.map((item, index) => (
+              <div key={index}>
                 <h1 className="text-xl text-white font-semibold mb-3">
                   {item.label}
                 </h1>
 
                 <ul className="flex flex-col gap-3 text-slate-300 text-">
-                  {item.links.map((link) => (
-                    <li key={link.value}>{link.value}</li>
+                  {item.links.map((link, index) => (
+                    <li key={index}>{link.value}</li>
                   ))}
                 </ul>
               </div>

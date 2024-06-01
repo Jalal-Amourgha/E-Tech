@@ -16,14 +16,14 @@ import { useState } from "react";
 const Statistics = () => {
   const [hovered, setHovered] = useState(-1);
   let icons = [
-    <RiMoneyDollarCircleLine />,
-    <CiShop />,
-    <FaUsers />,
-    <TbStarsFilled />,
-    <FaBoxesStacked />,
-    <MdOutlineSentimentSatisfiedAlt />,
-    <TbWorldCheck />,
-    <CgWebsite />,
+    { id: 1, icon: <RiMoneyDollarCircleLine /> },
+    { id: 2, icon: <CiShop /> },
+    { id: 3, icon: <FaUsers /> },
+    { id: 4, icon: <TbStarsFilled /> },
+    { id: 5, icon: <FaBoxesStacked /> },
+    { id: 6, icon: <MdOutlineSentimentSatisfiedAlt /> },
+    { id: 7, icon: <TbWorldCheck /> },
+    { id: 8, icon: <CgWebsite /> },
   ];
 
   return (
@@ -44,7 +44,7 @@ const Statistics = () => {
                   : "bg-black text-white  border-bg-color"
               } duration-500 rounded-full flex justify-center items-center text-[40px] border-[10px]  mx-auto`}
             >
-              {icons[index]}
+              {icons[index].icon}
             </div>
             <h1 className="text-3xl font-bold my-5">{stat.value}</h1>
             <p>{stat.label}</p>

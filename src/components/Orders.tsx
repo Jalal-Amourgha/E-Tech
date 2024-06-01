@@ -22,8 +22,8 @@ const Orders = ({ data }: { data?: OrderProps[] }) => {
           Your Cart is Empty!
         </h1>
         <p className="text-xl w-2/3">
-          It looks like you haven't added any products to your cart yet. Don't
-          miss out on the latest tech gadgets and deals!
+          It looks like you haven&apos;t added any products to your cart yet.
+          Don&apos;t miss out on the latest tech gadgets and deals!
         </p>
         <p className="text-xl mt-10 mb-5 w-2/3">
           Start shopping now and fill your cart with amazing tech products! If

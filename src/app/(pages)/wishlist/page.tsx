@@ -7,7 +7,7 @@ import PageHeader from "@/components/PageHeader";
 import { useAppContext } from "@/context";
 import { products } from "@/constants";
 
-const page = () => {
+const WishlistPage = () => {
   const { myProducts } = useAppContext();
 
   return (
@@ -54,4 +54,4 @@ const page = () => {
   );
 };
 
-export default page;
+export default WishlistPage;

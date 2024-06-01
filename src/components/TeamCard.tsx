@@ -13,10 +13,10 @@ interface TeamCardProps {
 
 const TeamCard = ({ member }: TeamCardProps) => {
   let socials = [
-    <FaXTwitter />,
-    <FaInstagram />,
-    <SlSocialFacebook />,
-    <SlSocialLinkedin />,
+    { id: 1, icon: <FaXTwitter /> },
+    { id: 1, icon: <FaInstagram /> },
+    { id: 1, icon: <SlSocialFacebook /> },
+    { id: 1, icon: <SlSocialLinkedin /> },
   ];
   return (
     <div key={member.name} className="w-full flex">
@@ -29,7 +29,7 @@ const TeamCard = ({ member }: TeamCardProps) => {
         <ul className="flex flex-row items-center gap-3 mt-3 text-xl">
           {socials.map((social, index) => (
             <li className="hover:text-primary cursor-pointer" key={index}>
-              {social}
+              {social.icon}
             </li>
           ))}
         </ul>
