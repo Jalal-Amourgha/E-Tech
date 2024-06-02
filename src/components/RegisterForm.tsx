@@ -4,6 +4,7 @@ import { handIcon } from "@/assets/icons";
 import { TextField } from "@mui/material";
 import Image from "next/image";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { useState } from "react";
 
 const RegisterForm = () => {
@@ -11,7 +12,7 @@ const RegisterForm = () => {
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
   const [confirmPassword, setConfirmPassword] = useState<string>("");
-
+  const router = useRouter();
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
@@ -32,7 +33,7 @@ const RegisterForm = () => {
 
       if (res.ok) {
         console.log("saaalam");
-        // route.push("/profile");
+        router.push("/login");
       } else {
         console.log("This email is already taken");
       }
@@ -75,6 +76,7 @@ const RegisterForm = () => {
             <TextField
               required
               id="outlined-basic"
+              type="email"
               label="Email Address"
               variant="outlined"
               fullWidth={true}

@@ -1,9 +1,10 @@
-import { NextResponse } from "next/server";
 import bcrypt from "bcryptjs";
+import { NextResponse } from "next/server";
+
 import { connectToDB } from "@/utils/database";
 import User from "@/models/user";
 
-export async function POST(req: NextResponse) {
+export async function POST(req) {
   try {
     const { email, name, password } = await req.json();
 
@@ -16,6 +17,7 @@ export async function POST(req: NextResponse) {
       name: name,
       password: hashedPassword,
       orders: [],
+      paymentDetails: {},
     });
 
     return NextResponse.json({ message: "User Registed" }, { status: 201 });

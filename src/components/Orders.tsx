@@ -40,7 +40,7 @@ const Orders = ({ data }: { data?: OrderProps[] }) => {
       <div className="flex flex-col gap-5 mt-10">
         {data?.map((order) => (
           <div className="flex flex-col relative" key={order.name}>
-            <h1 className="text-lg font-semibold mb-2">
+            <h1 className="text-lg font-semibold mb-2 line-clamp-1">
               Order_id: {order.order_id}
             </h1>
             <p

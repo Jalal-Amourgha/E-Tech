@@ -38,11 +38,27 @@ export interface OrderProps {
   date?: string;
   quantity: number;
 }
+
+export interface PaymentDetailsProps {
+  name: string;
+  lastName: string;
+  email: string;
+  country: string;
+  city: string;
+  zipCode: string;
+  phoneNumber: string;
+  creditCardNumber: string;
+  creditCardName: string;
+  validity: string;
+  CVC: string;
+}
+
 export interface UserDataProps {
   email: string;
   password: string;
   name: string;
   orders: OrderProps[];
+  paymentDetails: PaymentDetailsProps;
 }
 
 export interface LeadershipTeamProps {

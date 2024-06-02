@@ -17,6 +17,9 @@ const UserSchema = new Schema(
     orders: {
       type: Array,
     },
+    paymentDetails: {
+      type: Object,
+    },
   },
   { timestamps: true }
 );

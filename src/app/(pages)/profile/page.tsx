@@ -8,18 +8,31 @@ import Purchases from "@/components/Purchases";
 import Orders from "@/components/Orders";
 import { useEffect, useState } from "react";
 import { signOut, useSession } from "next-auth/react";
+import { IoBagCheckOutline } from "react-icons/io5";
 import { UserDataProps } from "@/types";
+import PaymentDetails from "@/components/PaymentDetails";
 
 let filterOptions = [
-  { icon: <FaRegUser className="text-2xl" />, title: "Personal Information" },
-  { icon: <FaRegCreditCard className="text-2xl" />, title: "My Purchases" },
-  { icon: <BsBoxSeam className="text-2xl" />, title: "My Orders" },
+  {
+    id: 1,
+    icon: <FaRegUser className="text-2xl" />,
+    title: "Personal Information",
+  },
+  {
+    id: 2,
+    icon: <IoBagCheckOutline className="text-2xl" />,
+    title: "My Purchases",
+  },
+  {
+    id: 3,
+    icon: <FaRegCreditCard className="text-2xl" />,
+    title: "My Payemnt Details",
+  },
+  { id: 4, icon: <BsBoxSeam className="text-2xl" />, title: "My Orders" },
 ];
 
 const MyProfile = () => {
-  const [optionSelected, setOptionSelected] = useState<string>(
-    "Personal Information"
-  );
+  const [optionSelected, setOptionSelected] = useState<number>(1);
   const [userData, setUserData] = useState<UserDataProps>();
   const { data: session } = useSession();
   let fetchOneTime = true;
@@ -41,8 +54,8 @@ const MyProfile = () => {
   return (
     <>
       <section className="container mt-[200px]">
-        <div className="flex flex-col md:flex-row gap-10 ">
-          <div className="md:basis-[500px]">
+        <div className="flex flex-col md:flex-row">
+          <div className="md:basis-[400px]">
             <div className="flex items-center gap-5 mb-8">
               <FaRegCircleUser className="text-5xl" />
               <div>
@@ -50,15 +63,13 @@ const MyProfile = () => {
                 <p className="text-gray">{userData?.email}</p>
               </div>
             </div>
-            {filterOptions.map((option) => (
+            {filterOptions.map((option, index) => (
               <div
                 className={`flex items-center gap-2 font-normal py-2 mb-10 cursor-pointer duration-300 hover:text-primary ${
-                  optionSelected === option.title
-                    ? "text-primary"
-                    : "text-black"
+                  optionSelected === option.id ? "text-primary" : "text-black"
                 }`}
-                onClick={() => setOptionSelected(option.title)}
-                key={option.title}
+                onClick={() => setOptionSelected(option.id)}
+                key={index}
               >
                 {option.icon} <p className="text-lg">{option.title}</p>
               </div>
@@ -70,10 +81,12 @@ const MyProfile = () => {
               <TbLogout2 className="text-2xl" /> <p>Logout</p>
             </div>
           </div>
-          <div style={{ flexBasis: "calc(100% - 500px)" }}>
-            {optionSelected === "My Purchases" ? (
+          <div style={{ flexBasis: "calc(100% - 400px)" }}>
+            {optionSelected === 2 ? (
               <Purchases data={userData?.orders} />
-            ) : optionSelected === "My Orders" ? (
+            ) : optionSelected === 3 ? (
+              <PaymentDetails paymentDetails={userData?.paymentDetails} />
+            ) : optionSelected === 4 ? (
               <Orders data={userData?.orders} />
             ) : (
               <EditProfile userInfo={userData} />

@@ -56,18 +56,6 @@ const Products = () => {
     };
 
   useEffect(() => {
-    if (categoriesSelected.length > 1) {
-      setProductsShown(
-        products.filter((product) =>
-          categoriesSelected.includes(product.category)
-        )
-      );
-    } else {
-      setProductsShown(products);
-    }
-  }, [categoriesSelected]);
-
-  useEffect(() => {
     let prices = productsShown.map((item) => item.price);
     setPrice({
       lowest: Math.min(...prices),
@@ -141,6 +129,18 @@ const Products = () => {
       );
     }
   }, [percent]);
+
+  useEffect(() => {
+    if (categoriesSelected.length > 1) {
+      setProductsShown(
+        products.filter((product) =>
+          categoriesSelected.includes(product.category)
+        )
+      );
+    } else {
+      setProductsShown(products);
+    }
+  }, [categoriesSelected]);
 
   return (
     <section className="flex flex-col md:flex-row gap-10">

@@ -21,20 +21,21 @@ import { useSession } from "next-auth/react";
 const BillingDetails = () => {
   const {
     myProducts,
+    setMyProducts,
     getTotalPrice,
     myBillingInformations,
     setMyBillingInformations,
     quantities,
   } = useAppContext();
   const [showPaymentDetails, setShowPaymentDetails] = useState(false);
-  const [orderPlaced, setOrderPlaced] = useState(false);
   const [cardNumber, setCardNumber] = useState("");
   const [cardCVC, setCardCVC] = useState("");
   const [cardName, setCardName] = useState("");
   const [cardExpire, setCardExpire] = useState("");
   const [name, setName] = useState("");
+  const [lastName, setLastName] = useState("");
   const [email, setEmail] = useState("");
-  const [country, setCountry] = useState("");
+  const [country, setCountry] = useState<any>("");
   const [number, setNumber] = useState("");
   const [city, setCity] = useState("");
   const [zipCode, setZipCode] = useState("");
@@ -50,18 +51,11 @@ const BillingDetails = () => {
     }
   };
 
-  const handleChangeCVV = (event: any) => {
-    const newValue = event.target.value;
-    if (/^\d*$/.test(newValue)) {
-      setCardCVC(newValue);
-    }
-  };
+  const fetchUserInfo = async (id: string) => {
+    let res = await fetch(`/api/user/${id}/infos`);
+    let data = await res.json();
 
-  const handleChangeName = (event: any) => {
-    const newValue = event.target.value;
-    if (/^[\p{L}\s]*$/u.test(newValue)) {
-      setCardName(newValue);
-    }
+    return data;
   };
   const handleDateChange = (newDate: any) => {
     if (newDate) {
@@ -106,19 +100,6 @@ const BillingDetails = () => {
     );
     let productsSlected = [];
 
-    // setMyBillingInformations({
-    //   fullname: name,
-    //   email: email,
-    //   country: country,
-    //   city: city,
-    //   zipCode: zipCode,
-    //   phoneNumber: number,
-    //   creditCardNumber: cardNumber,
-    //   creditCardName: cardName,
-    //   validity: cardExpire,
-    //   CVC: cardCVC,
-    // });
-
     for (let i = 0; i < addedCartProducts.length; i++) {
       var order_id = generateOrderId();
       var createdAt = new Date();
@@ -137,6 +118,19 @@ const BillingDetails = () => {
             body: JSON.stringify({
               type: "orders",
               orders: productsSlected,
+              paymentDetails: {
+                name: name,
+                lastName: lastName,
+                email: email,
+                country: country,
+                city: city,
+                zipCode: zipCode,
+                phoneNumber: number,
+                creditCardNumber: cardNumber,
+                creditCardName: cardName,
+                validity: cardExpire,
+                CVC: cardCVC,
+              },
             }),
           }
         );
@@ -147,9 +141,29 @@ const BillingDetails = () => {
         }
       } catch (error) {
         console.log(error);
+      } finally {
+        setMyProducts(myProducts.filter((products: any) => !products.cart));
       }
     }
   };
+
+  useEffect(() => {
+    if (session?.user?.email) {
+      fetchUserInfo(session?.user?.email).then((res) => {
+        var paymentDetails = res.paymentDetails;
+        setName(paymentDetails.name);
+        setLastName(paymentDetails.lastName);
+        setCity(paymentDetails.city);
+        setZipCode(paymentDetails.zipCode);
+        setEmail(paymentDetails.email);
+        setNumber(paymentDetails.phoneNumber);
+        setCardName(paymentDetails.creditCardName);
+        setCardNumber(paymentDetails.creditCardNumber);
+        setCardExpire(paymentDetails.validity);
+        setCardCVC(paymentDetails.CVC);
+      });
+    }
+  }, [session?.user?.email]);
 
   return (
     <>
@@ -166,7 +180,7 @@ const BillingDetails = () => {
           </div>
 
           <div className="bg-mastercard-bg h-[300px] max-w-[500px] bg-no-repeat bg-contain relative mb-10 mx-auto">
-            <div className="w-[85%] absolute bottom-20 left-10 text-xl text-white flex justify-between items-center">
+            <div className="w-[85%] absolute bottom-[120px] md:bottom-20 left-10 text-xl text-white flex justify-between items-center">
               <div>
                 <p className="mb-2">{cardName ? cardName : ""}</p>
                 <p>{cardNumber ? cardNumber : ""}</p>
@@ -180,14 +194,20 @@ const BillingDetails = () => {
             className="flex flex-col gap-5"
           >
             <TextField
+              required
               id="standard-basic"
               label="Name on card"
               placeholder="Anas Ajaanan"
               variant="standard"
               value={cardName}
-              onChange={handleChangeName}
+              onChange={(e) => {
+                /^[\p{L}\s]*$/u.test(e.target.value)
+                  ? setCardName(e.target.value)
+                  : "";
+              }}
             />
             <TextField
+              required
               id="standard-basic"
               label="Card number"
               placeholder="0000 0000 0000"
@@ -200,17 +220,19 @@ const BillingDetails = () => {
               <LocalizationProvider dateAdapter={AdapterDayjs}>
                 <DemoContainer components={["DateField"]}>
                   <DateField
+                    required
                     label="Expiry date"
                     format="MM-YY"
                     variant="standard"
                     minDate={dayjs("2024-01-01")}
-                    maxDate={dayjs("2030-12-31")}
+                    maxDate={dayjs("2035-12-31")}
                     onChange={handleDateChange}
                     fullWidth={true}
                   />
                 </DemoContainer>
               </LocalizationProvider>
               <TextField
+                required
                 id="filled-password-input"
                 label="CNN Code"
                 placeholder="CNN Code"
@@ -218,13 +240,17 @@ const BillingDetails = () => {
                 autoComplete="current-password"
                 variant="standard"
                 value={cardCVC}
-                onChange={handleChangeCVV}
+                onChange={(e) => {
+                  /^\d*$/.test(e.target.value)
+                    ? setCardCVC(e.target.value)
+                    : console.log(e.target.value);
+                }}
                 inputProps={{ maxLength: 3 }}
               />
             </div>
             <button
               type="submit"
-              className="bg-custom-gradient tetx-lg py-3 px-20 text-center font-medium text-white mt-10 rounded-lg mx-auto"
+              className="bg-custom-gradient tetx-lg py-3 px-20 text-center font-medium text-white mt-10 rounded-lg"
             >
               PAY ${getTotalPrice()}.00
             </button>
@@ -260,6 +286,12 @@ const BillingDetails = () => {
                   label="Last Name"
                   variant="standard"
                   fullWidth={true}
+                  value={lastName}
+                  onChange={(e) => {
+                    /^[\p{L}\s]*$/u.test(e.target.value)
+                      ? setLastName(e.target.value)
+                      : "";
+                  }}
                 />
               </div>
             </div>
@@ -270,7 +302,7 @@ const BillingDetails = () => {
                 options={countries11}
                 autoHighlight
                 getOptionLabel={(option) => option.label}
-                onChange={(e) => setCountry(e.target?.textContent)}
+                onChange={(e) => setCountry(e.currentTarget.textContent)}
                 renderOption={(props, option) => (
                   <Box
                     component="li"
@@ -280,7 +312,9 @@ const BillingDetails = () => {
                   >
                     <Image
                       loading="lazy"
-                      width="20"
+                      width={20}
+                      height={20}
+                      sizes="100%"
                       src={`https://flagcdn.com/w20/${option.code.toLowerCase()}.png`}
                       alt=""
                     />
@@ -337,6 +371,7 @@ const BillingDetails = () => {
                 id="outlined-basic"
                 label="E-mail"
                 variant="standard"
+                type="emial"
                 fullWidth={true}
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}

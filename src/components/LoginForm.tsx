@@ -54,6 +54,7 @@ const LoginForm = () => {
               required
               id="outlined-basic"
               label="Email Address"
+              type="email"
               variant="outlined"
               fullWidth={true}
               value={email}

@@ -19,7 +19,7 @@ export const GET = async (request, { params }) => {
 };
 
 export const PATCH = async (request, { params }) => {
-  const { type, orders, newPassword } = await request.json();
+  const { type, orders, paymentDetails, newPassword } = await request.json();
 
   try {
     await connectToDB();
@@ -35,6 +35,7 @@ export const PATCH = async (request, { params }) => {
 
     if (type === "orders") {
       userInfo.orders = [...userInfo.orders, ...orders];
+      userInfo.paymentDetails = paymentDetails;
     } else if (type === "password") {
       const hashedPassword = await bcrypt.hash(newPassword, 10);
       userInfo.password = hashedPassword;
