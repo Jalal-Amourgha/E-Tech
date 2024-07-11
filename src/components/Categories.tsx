@@ -1,21 +1,24 @@
 "use client";
 
 import SectionHeader from "./SectionHeader";
-import { IoPhonePortraitOutline } from "react-icons/io5";
-import { IoIosTabletPortrait } from "react-icons/io";
-import { IoIosLaptop } from "react-icons/io";
+import { IoIosTabletPortrait, IoIosLaptop } from "react-icons/io";
 import { LuMouse } from "react-icons/lu";
-import { BsKeyboard } from "react-icons/bs";
-import { BsDisplay } from "react-icons/bs";
-import { IoGameControllerOutline } from "react-icons/io5";
-import { PiWebcam } from "react-icons/pi";
+import { BsKeyboard, BsDisplay } from "react-icons/bs";
+import {
+  IoGameControllerOutline,
+  IoCameraOutline,
+  IoPhonePortraitOutline,
+} from "react-icons/io5";
+import {
+  PiWebcam,
+  PiComputerTower,
+  PiVirtualRealityLight,
+} from "react-icons/pi";
 import { FaHeadphonesSimple } from "react-icons/fa6";
-import { PiComputerTower } from "react-icons/pi";
 import { TbDeviceWatch } from "react-icons/tb";
 import { CiMicrophoneOn } from "react-icons/ci";
-import { PiVirtualRealityLight } from "react-icons/pi";
 import { VscGame } from "react-icons/vsc";
-import { IoCameraOutline } from "react-icons/io5";
+import { useRouter } from "next/navigation";
 
 export const categories = [
   { icon: <IoPhonePortraitOutline />, name: "Phones" },
@@ -36,6 +39,8 @@ export const categories = [
 ];
 
 const Categories = () => {
+  const router = useRouter();
+
   return (
     <section>
       <SectionHeader title="Categories" />
@@ -43,6 +48,7 @@ const Categories = () => {
         {categories.map((category) => (
           <div
             className="py-7 md:py-12 px-2 border-1 border-gray rounded-lg text-center duration-500 hover:bg-primary hover:text-white hover:border-primary cursor-pointer"
+            onClick={() => router.push("/products")}
             key={category.name}
           >
             <div className="text-[40px] w-fit mx-auto mb-4">

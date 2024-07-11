@@ -42,7 +42,7 @@ const Products = () => {
       } else {
         setCategoriesSelected(
           categoriesSelected.filter(
-            (title) => title !== category.toLowerCase().replace(" ", "")
+            (title: any) => title !== category.toLowerCase().replace(" ", "")
           )
         );
       }

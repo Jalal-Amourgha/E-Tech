@@ -116,9 +116,9 @@ export const mobileLinks = [
   { href: "/", label: "Home" },
   { href: "/products", label: "Shop" },
   { href: "/about", label: "About" },
-  { href: "/signup", label: "Sign Up" },
   { href: "/wishlist", label: "Wishlist" },
   { href: "/cart", label: "Cart" },
+  { href: "/signup", label: "Sign Up" },
 ];
 
 export const services = [
@@ -231,6 +231,7 @@ export const products = [
     reviews: "329",
     category: "laptops",
     stars: 4,
+    best: true,
   },
   {
     id: 8,
@@ -449,6 +450,7 @@ export const products = [
     category: "consoles",
     stars: 4.2,
     sale: 50,
+    best: true,
   },
   {
     id: 31,
@@ -866,6 +868,7 @@ export const products = [
     reviews: "325",
     category: "virtualreality",
     stars: 4.5,
+    best: true,
   },
   {
     id: 76,
@@ -875,7 +878,6 @@ export const products = [
     reviews: "187",
     category: "virtualreality",
     stars: 4.6,
-    best: true,
   },
   {
     id: 77,

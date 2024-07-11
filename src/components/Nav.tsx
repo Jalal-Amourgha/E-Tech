@@ -25,7 +25,7 @@ const Nav = () => {
   ];
 
   return (
-    <header className="fixed top-0 left-0 w-full bg-white z-50">
+    <header className="sticky top-0 left-0 w-full bg-white z-50">
       <nav className="container relative flex justify-between items-center py-5 border-b-1 border-color">
         <h1 className="text-3xl font-bold">E-Tech</h1>
         <ul className="hidden md:flex items-center justify-center gap-7">
@@ -101,10 +101,10 @@ const Nav = () => {
         {/* M O B I L E - N A V */}
 
         <div
-          className="block md:hidden text-2xl cursor-pointer"
+          className="block md:hidden text-2xl hover:text-primary cursor-pointer"
           onClick={() => setShowNav(!showNav)}
         >
-          {showNav ? <RiMenuFill /> : <RiMenu3Fill />}
+          {showNav ? <RiMenuFill className="text-primary" /> : <RiMenu3Fill />}
         </div>
 
         <ul

@@ -10,7 +10,7 @@ import { products } from "@/constants";
 
 const Sales = () => {
   const { slideIndex, setSlideIndex } = useAppContext();
-  const [deadline, setDeadline] = useState<number>(10 * 60 * 1000);
+  const [deadline, setDeadline] = useState<number>(60 * 60 * 10 * 60 * 1000);
 
   const handleNext = () => {
     if (slideIndex > 5) {
@@ -86,7 +86,7 @@ const Sales = () => {
       <SectionHeader title="This Month" />
       <div className="flex items-center justify-center md:justify-between mb-10">
         <h1 className="hidden md:block text-3xl font-semibold">Flash Sales</h1>
-        <div>{getFormattedTime(60 * 60 * 1000)}</div>
+        <div>{getFormattedTime(deadline)}</div>
         <div className="hidden md:flex flex-row gap-5">
           <button
             className="bg-bg-color text-2xl text-black p-5 rounded-full duration-300 hover:bg-primary hover:text-white"

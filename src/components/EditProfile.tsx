@@ -6,7 +6,6 @@ import { useState } from "react";
 const EditProfile = ({ userInfo }: { userInfo?: UserDataProps }) => {
   const [name, setName] = useState<string>(userInfo?.name as string);
   const [email, setEmail] = useState<string>(userInfo?.email as string);
-  const [currentPassword, setCurrentPassword] = useState<string>("");
   const [newPassword, setNewPassword] = useState<string>("");
   const [confirmNewPassword, setConfirmNewPassword] = useState<string>("");
 
